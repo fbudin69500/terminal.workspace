@@ -1,0 +1,25 @@
+# The following variables can be defined in a
+# `.workspace.config` file for spack workspace:
+
+# * `workspace_spack_packages`: This variable defines the list of
+# spack packages that are automatically loaded when working in
+# the current workspace.
+
+# This variable should be defined as `local` variables to avoid
+# polluting the environment.
+
+function spack_deactivate_workspace {
+        if [[ -n "$workspace_spack_packages" ]]; then
+            for package in ${workspace_spack_packages[@]}; do
+                spack unload $package
+            done
+        fi
+}
+
+function spack_activate_workspace {
+    if [[ -n "$workspace_spack_packages" ]]; then
+        for package in ${workspace_spack_packages[@]}; do
+            spack load $package
+        done
+    fi
+}
