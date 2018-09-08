@@ -25,9 +25,8 @@ files to allow more flexible folder configurations.
   * Document using local vs environment variables (environment variables clutter the
 environment but allow the user to interrogate the current configuration.
   * Allow a quiet vs verbose mode which would print information when changing directory.
-* Add functions to activate and deactivate the workspace without changing directory
-  * Create configuration file and update configuration file that contains a name
-and a corresponding folder. This would allow calling the activate and deactivate function
 with just a name, not the whole path. Beware: Handle collisions.
 * Can we create an extension that saves the command history per folder?
 * Allow inheritance of workspace configuration.
+* Improve manual configuration by creating configuration file and update configuration file that contains a name
+and a corresponding folder. This would allow calling the activate and deactivate function
