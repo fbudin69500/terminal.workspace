@@ -1,0 +1,21 @@
+# The following variables can be defined in a
+# `.workspace.config` file for python-venv workspace:
+
+# * `workspace_virtual_env`: This variable defines the Python virtual
+# environment that is automatically loaded when working in
+# the current workspace.
+
+# This variable should be defined as `local` variables to avoid
+# polluting the environment.
+
+function python-venv_activate_workspace {
+    if [[ -n "$workspace_virtual_env" ]]; then
+        workon $workspace_virtual_env
+    fi
+}
+
+function python-venv_deactivate_workspace {
+    if [[ -n "$workspace_virtual_env" ]]; then
+        deactivate
+    fi
+}
