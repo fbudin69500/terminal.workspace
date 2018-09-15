@@ -1,0 +1,26 @@
+# The following variables can be defined in a
+# `.workspace.config` file for environment-variables workspace:
+
+# * `workspace_env_var`: This variable defines the list of
+# environment variables that are automatically set when working in
+# the current workspace.
+
+# This variable should be defined as `local` variables to avoid
+# polluting the environment.
+
+function env_var_activate_workspace {
+        if [[ -n "$workspace_env_var" ]]; then
+            for _expr in ${workspace_env_var[@]}; do
+                eval export $( echo $_expr )
+            done
+        fi
+}
+
+function env_var_deactivate_workspace {
+    if [[ -n "$workspace_env_var" ]]; then
+        for _expr in ${workspace_env_var[@]}; do
+            var_name=$(echo $_expr |sed 's/=.*//')
+            unset $var_name
+        done
+    fi
+}
