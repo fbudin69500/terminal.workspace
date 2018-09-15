@@ -8,18 +8,18 @@
 # This variable should be defined as `local` variables to avoid
 # polluting the environment.
 
-function spack_deactivate_workspace {
-        if [[ -n "$workspace_spack_packages" ]]; then
-            for package in ${workspace_spack_packages[@]}; do
-                spack unload $package
-            done
-        fi
-}
-
 function spack_activate_workspace {
     if [[ -n "$workspace_spack_packages" ]]; then
         for package in ${workspace_spack_packages[@]}; do
             spack load $package
         done
     fi
+}
+
+function spack_deactivate_workspace {
+        if [[ -n "$workspace_spack_packages" ]]; then
+            for package in ${workspace_spack_packages[@]}; do
+                spack unload $package
+            done
+        fi
 }
