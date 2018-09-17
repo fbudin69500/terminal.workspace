@@ -5,10 +5,15 @@
 # spack packages that are automatically loaded when working in
 # the current workspace.
 
-# This variable should be defined as `local` variables to avoid
+# This variable should be defined as a `local` variable to avoid
 # polluting the environment.
 
 function spack_activate_workspace {
+    source $1
+    if [[ -n "$DEBUG_WORKSPACE" ]]; then
+        echo 'Running `spack_activate_workspace`'
+        echo "workspace_spack_packages: $workspace_spack_packages"
+    fi
     if [[ -n "$workspace_spack_packages" ]]; then
         for package in ${workspace_spack_packages[@]}; do
             spack load $package
@@ -17,9 +22,14 @@ function spack_activate_workspace {
 }
 
 function spack_deactivate_workspace {
-        if [[ -n "$workspace_spack_packages" ]]; then
-            for package in ${workspace_spack_packages[@]}; do
-                spack unload $package
-            done
-        fi
+    source $1
+    if [[ -n "$DEBUG_WORKSPACE" ]]; then
+        echo 'Running `spack_deactivate_workspace`'
+        echo "workspace_spack_packages: $workspace_spack_packages"
+    fi
+    if [[ -n "$workspace_spack_packages" ]]; then
+        for package in ${workspace_spack_packages[@]}; do
+            spack unload $package
+        done
+    fi
 }

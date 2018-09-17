@@ -1,0 +1,15 @@
+# TODO: Add documentation
+
+WORKSPACE_FILENAME=CMakeCache.txt
+
+function cmake_bin_activate_workspace {
+    if [[ -n "$DEBUG_WORKSPACE" ]]; then
+        echo 'Running `cmake_bin_activate_workspace`'
+    fi
+}
+
+function cmake_bin_deactivate_workspace {
+    if [[ -n "$DEBUG_WORKSPACE" ]]; then
+        echo 'Running `cmake_bin_deactivate_workspace`'
+    fi
+}

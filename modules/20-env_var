@@ -5,18 +5,28 @@
 # environment variables that are automatically set when working in
 # the current workspace.
 
-# This variable should be defined as `local` variables to avoid
+# This variable should be defined as a `local` variable to avoid
 # polluting the environment.
 
 function env_var_activate_workspace {
-        if [[ -n "$workspace_env_var" ]]; then
-            for _expr in ${workspace_env_var[@]}; do
-                eval export $( echo $_expr )
-            done
-        fi
+    source $1
+    if [[ -n "$DEBUG_WORKSPACE" ]]; then
+        echo 'Running `env_var_activate_workspace`'
+        echo "workspace_env_var: $workspace_env_var"
+    fi
+    if [[ -n "$workspace_env_var" ]]; then
+        for _expr in ${workspace_env_var[@]}; do
+            eval export $( echo $_expr )
+        done
+    fi
 }
 
 function env_var_deactivate_workspace {
+    source $1
+    if [[ -n "$DEBUG_WORKSPACE" ]]; then
+        echo 'Running env_var_deactivate_workspace`'
+        echo "workspace_env_var: $workspace_env_var"
+    fi
     if [[ -n "$workspace_env_var" ]]; then
         for _expr in ${workspace_env_var[@]}; do
             var_name=$(echo $_expr |sed 's/=.*//')
