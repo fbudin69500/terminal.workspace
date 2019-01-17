@@ -11,6 +11,13 @@
 function env_var_activate_workspace {
         if [[ -n "$workspace_env_var" ]]; then
             for _expr in ${workspace_env_var[@]}; do
+                var_name=$(echo $_expr |sed 's/=.*//')
+                #Save old value
+                #TODO: Handle case where ${var_name}_OLD already exists. Error Message?
+                if [[ -n "$var_name" ]]; then
+                    eval $( echo ${var_name}_OLD=\$$var_name )
+                fi
+                # replace by new value
                 eval export $( echo $_expr )
             done
         fi
@@ -20,7 +27,14 @@ function env_var_deactivate_workspace {
     if [[ -n "$workspace_env_var" ]]; then
         for _expr in ${workspace_env_var[@]}; do
             var_name=$(echo $_expr |sed 's/=.*//')
-            unset $var_name
+            #unset $var_name
+            #var_name=$( echo $_expr | sed -n 's;\([^=]*\)=.*;\1;p')
+            #Load old value
+            if [[ -n "$var_name" ]]; then
+                eval export $( echo ${var_name}=\$${var_name}_OLD )
+            fi
+            unset ${var_name}_OLD
+            # TODO: Need to unset ${var_name} if it did not exist originally
         done
     fi
 }
