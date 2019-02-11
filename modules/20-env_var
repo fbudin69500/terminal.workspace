@@ -8,6 +8,18 @@
 # This variable should be defined as `local` variables to avoid
 # polluting the environment.
 
+# IMPORTANT: If you append values to an existing environment variable,
+# make sure that your expression does not evaluate when the `.workspace.config`
+# file is loaded, but only when the expression is evaluated. This means that
+# if the expression contains a `$`, you need to escape it with `\` or write the
+# expression between simple quotes, not double quotes!!!
+#
+# e.g. workspace_env_var=("PATH=~/bin:\$PATH")
+#
+# or
+#
+# e.g. workspace_env_var=('PATH=~/bin:$PATH')
+
 function env_var_activate_workspace {
         if [[ -n "$workspace_env_var" ]]; then
             for _expr in ${workspace_env_var[@]}; do
